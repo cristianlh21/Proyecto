@@ -1,0 +1,16 @@
+<h1>Crear Habitación</h1>
+
+<form method="post">
+    {% csrf_token %}
+    
+    <h3>Habitación</h3>
+    {{ habitacion_form.as_p }}
+
+    <h3>Crear nuevo Tipo de Habitación (opcional)</h3>
+    {{ tipo_form.as_p }}
+    
+    <button type="submit" name="crear_tipo">Crear Tipo + Habitación</button>
+    <button type="submit">Crear Habitación</button>
+</form>
+
+<a href="{% url 'lista_habitaciones' %}">Volver al listado</a>

@@ -1,0 +1,22 @@
+<h1>Listado de Habitaciones</h1>
+
+<table border="1">
+    <tr>
+        <th>Número</th>
+        <th>Tipo</th>
+        <th>Capacidad</th>
+        <th>Piso</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+    </tr>
+    {% for hab in habitaciones %}
+    <tr>
+        <td>{{ hab.numero }}</td>
+        <td>{{ hab.tipo_habitacion.nombre }}</td>
+        <td>{{ hab.tipo_habitacion.capacidad }}</td>
+        <td>{{ hab.piso }}</td>
+        <td>{{ hab.get_estado_display }}</td>
+        <td><a href="{% url 'detalle_habitacion' hab.id %}">Ver detalle</a></td>
+    </tr>
+    {% endfor %}
+</table>

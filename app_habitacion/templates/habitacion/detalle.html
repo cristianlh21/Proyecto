@@ -1,0 +1,7 @@
+<h1>Habitación {{ habitacion.numero }}</h1>
+
+<p><strong>Tipo:</strong> {{ habitacion.tipo_habitacion.nombre }}</p>
+<p><strong>Descripción:</strong> {{ habitacion.tipo_habitacion.descripcion }}</p>
+<p><strong>Estado:</strong> {{ habitacion.estado }}</p>
+
+<a href="{% url 'lista_habitaciones' %}">Volver al listado</a>
