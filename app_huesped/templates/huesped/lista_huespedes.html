@@ -1,0 +1,24 @@
+<h1>Lista de Huespedes</h1>
+<a href="{% url 'crear_huesped' %}">➕ Nuevo Huesped</a>
+<table border="1">
+    <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Documento</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+    </tr>
+    {% for huesped in huespedes %}
+    <tr>
+        <td>{{ huesped.nombre }}</td>
+        <td>{{ huesped.apellido }}</td>
+        <td>{{ huesped.numero_documento }}</td>
+        <td>{{ huesped.get_estado_display }}</td>
+        <td>
+            <a href="{% url 'editar_huesped' huesped.pk %}">✏️ Editar</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="5">No hay huespedes registrados.</td></tr>
+    {% endfor %}
+</table>
