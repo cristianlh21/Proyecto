@@ -1,0 +1,35 @@
+<h1>Agregar Habitación a Reserva #{{ reserva.pk }}</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">➕ Agregar Habitación</button>
+</form>
+
+<h2>Habitaciones agregadas</h2>
+<table border="1" style="width: 100%; border-collapse: collapse;">
+    <tr>
+        <th>Habitación</th>
+        <th>Tipo</th>
+        <th>Tarifa</th>
+        <th>Canal de Venta</th>
+        <th>Moneda</th>
+        <th>Monto ARS</th>
+        <th>Estado</th>
+    </tr>
+    {% for hab in habitaciones_agregadas %}
+    <tr>
+        <td>{{ hab.habitacion.numero }}</td>
+        <td>{{ hab.habitacion.tipo_habitacion.nombre }}</td>
+        <td>{{ hab.tarifa.monto }}</td>
+        <td>{{ hab.tarifa.canal_venta.nombre }}</td>
+        <td>{{ hab.moneda_original.codigo }}</td>
+        <td>{{ hab.monto_ars }}</td>
+        <td>{{ hab.habitacion.get_estado_display }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="7">No hay habitaciones agregadas.</td></tr>
+    {% endfor %}
+</table>
+
+<a href="{% url 'editar_reserva' reserva.pk %}">⬅️ Volver a la reserva</a>

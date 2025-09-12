@@ -1,28 +1,34 @@
 <h1>Lista de Reservas</h1>
 <a href="{% url 'crear_reserva' %}">➕ Nueva Reserva</a>
-<table border="1">
-    <tr>
-        <th>ID</th>
-        <th>Reservante</th>
-        <th>Ingreso</th>
-        <th>Salida</th>
-        <th>Estado</th>
-        <th>Monto Total</th>
-        <th>Acciones</th>
-    </tr>
-    {% for reserva in reservas %}
-    <tr>
-        <td>{{ reserva.pk }}</td>
-        <td>{{ reserva.huesped_reservante }}</td>
-        <td>{{ reserva.fecha_ingreso }}</td>
-        <td>{{ reserva.fecha_salida }}</td>
-        <td>{{ reserva.get_estado_display }}</td>
-        <td>{{ reserva.monto_total }}</td>
-        <td>
-            <a href="{% url 'editar_reserva' reserva.pk %}">✏️ Editar</a>
-        </td>
-    </tr>
-    {% empty %}
-    <tr><td colspan="7">No hay reservas registradas.</td></tr>
-    {% endfor %}
+
+<table border="1" style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+    <thead style="background-color: #f0f0f0;">
+        <tr>
+            <th>ID</th>
+            <th>Reservante</th>
+            <th>Ingreso</th>
+            <th>Salida</th>
+            <th>Estado</th>
+            <th>Monto Total</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for reserva in reservas %}
+        <tr>
+            <td>{{ reserva.pk }}</td>
+            <td>{{ reserva.huesped_reservante }}</td>
+            <td>{{ reserva.fecha_ingreso }}</td>
+            <td>{{ reserva.fecha_salida }}</td>
+            <td>{{ reserva.get_estado_display }}</td>
+            <td>{{ reserva.monto_total }}</td>
+            <td>
+                <a href="{% url 'editar_reserva' reserva.pk %}">✏️ Editar</a>
+                <a href="{% url 'agregar_habitacion_reserva' reserva.pk %}">➕ Agregar Habitación</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="7">No hay reservas registradas.</td></tr>
+        {% endfor %}
+    </tbody>
 </table>
