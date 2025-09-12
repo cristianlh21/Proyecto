@@ -1,0 +1,9 @@
+<h1>Editar Habitación {{ habitacion.numero }}</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Guardar cambios</button>
+</form>
+
+<a href="{% url 'lista_habitaciones' %}">Volver al listado</a>

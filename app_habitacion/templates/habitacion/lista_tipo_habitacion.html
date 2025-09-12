@@ -1,0 +1,20 @@
+<table border="1">
+    <tr>
+        <th>id</th>
+        <th>Tipo</th>
+        <th>Capacidad</th>
+    </tr>
+    {% for t in tipos %}
+    <tr>
+        <td>{{ t.id }}</td>
+        <td>{{ t.nombre }}</td>
+        <td>{{ t.capacidad }}</td>
+        <td>
+            <a href="{% url 'editar_tipo_habitacion' t.id %}">✏️ Editar</a> | 
+            <a href="{% url 'eliminar_tipo_habitacion' t.id %}">🗑️ Eliminar</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="5">No hay habitaciones disponibles</td></tr>
+    {% endfor %}
+</table>
