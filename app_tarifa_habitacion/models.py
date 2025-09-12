@@ -15,7 +15,7 @@ class ModalidadTarifa(models.Model):
     def __str__(self):
         return self.nombre
 
-class Canal(models.Model):
+class CanalVenta(models.Model):
     nombre = models.CharField(max_length=50, unique=True)  # Booking, Despegar, Directo
 
     def __str__(self):
@@ -35,7 +35,7 @@ class TipoCambio(models.Model):
 class Tarifa(models.Model):
     tipo_habitacion = models.ForeignKey(TipoHabitacion, on_delete=models.CASCADE)
     modalidad = models.ForeignKey(ModalidadTarifa, on_delete=models.CASCADE)
-    canal = models.ForeignKey(Canal, on_delete=models.CASCADE)
+    canal_venta = models.ForeignKey(CanalVenta, on_delete=models.CASCADE)
     moneda = models.ForeignKey(Moneda, on_delete=models.PROTECT)
     monto = models.DecimalField(max_digits=10, decimal_places=2)  # precio en moneda original
     monto_ars = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
@@ -51,4 +51,4 @@ class Tarifa(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.tipo_habitacion} | {self.modalidad} | {self.canal} | {self.monto} {self.moneda.codigo}"
+        return f"{self.tipo_habitacion} | {self.modalidad} | {self.canal_venta} | {self.monto} {self.moneda.codigo}"

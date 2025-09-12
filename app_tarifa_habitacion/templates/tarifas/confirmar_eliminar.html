@@ -1,0 +1,7 @@
+<h1>Eliminar Tarifa</h1>
+<p>¿Seguro que quieres eliminar la tarifa de <strong>{{ tarifa.tipo_habitacion }}</strong>?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">✅ Sí, eliminar</button>
+</form>
+<a href="{% url 'lista_tarifas' %}">❌ Cancelar</a>

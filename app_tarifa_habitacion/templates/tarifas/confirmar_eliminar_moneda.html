@@ -1,0 +1,7 @@
+<h1>Eliminar {{ tipo }}</h1>
+<p>¿Seguro que quieres eliminar <strong>{{ objeto }}</strong>?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">✅ Sí, eliminar</button>
+</form>
+<a href="javascript:history.back()">❌ Cancelar</a>

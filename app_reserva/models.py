@@ -1,8 +1,4 @@
 from django.db import models
-from decimal import Decimal
-from app_habitacion.models import Habitacion
-from app_tarifa_habitacion.models import Tarifa, Moneda
-
 
 class Reserva(models.Model):
     fecha_ingreso = models.DateField()

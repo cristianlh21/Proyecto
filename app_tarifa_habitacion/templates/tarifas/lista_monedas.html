@@ -1,0 +1,17 @@
+<h1>Lista de Monedas</h1>
+<a href="{% url 'crear_moneda' %}">➕ Nueva Moneda</a>
+<table border="1">
+    <tr><th>Código</th><th>Nombre</th><th>Acciones</th></tr>
+    {% for moneda in monedas %}
+    <tr>
+        <td>{{ moneda.codigo }}</td>
+        <td>{{ moneda.nombre }}</td>
+        <td>
+            <a href="{% url 'editar_moneda' moneda.pk %}">✏️ Editar</a> |
+            <a href="{% url 'eliminar_moneda' moneda.pk %}">🗑️ Eliminar</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="3">No hay monedas.</td></tr>
+    {% endfor %}
+</table>

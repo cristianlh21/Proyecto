@@ -1,0 +1,33 @@
+<h1>Lista de Tarifas</h1>
+<a href="{% url 'crear_tarifa' %}">➕ Nueva Tarifa</a>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Tipo Habitación</th>
+            <th>Modalidad</th>
+            <th>Canal</th>
+            <th>Moneda</th>
+            <th>Monto</th>
+            <th>Monto ARS</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for tarifa in tarifas %}
+        <tr>
+            <td>{{ tarifa.tipo_habitacion }}</td>
+            <td>{{ tarifa.modalidad }}</td>
+            <td>{{ tarifa.canal_venta }}</td>
+            <td>{{ tarifa.moneda }}</td>
+            <td>{{ tarifa.monto }}</td>
+            <td>{{ tarifa.monto_ars }}</td>
+            <td>
+                <a href="{% url 'editar_tarifa' tarifa.pk %}">✏️ Editar</a> |
+                <a href="{% url 'eliminar_tarifa' tarifa.pk %}">🗑️ Eliminar</a>
+            </td>
+        </tr>
+    {% empty %}
+        <tr><td colspan="7">No hay tarifas registradas.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>

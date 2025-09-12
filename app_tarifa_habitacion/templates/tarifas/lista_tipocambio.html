@@ -1,0 +1,23 @@
+<h1>Lista de Tipos de Cambio</h1>
+<a href="{% url 'crear_tipocambio' %}">➕ Nuevo Tipo de Cambio</a>
+<table border="1">
+    <tr>
+        <th>Moneda</th>
+        <th>Fecha</th>
+        <th>Valor</th>
+        <th>Acciones</th>
+    </tr>
+    {% for cambio in cambios %}
+    <tr>
+        <td>{{ cambio.moneda.codigo }}</td>
+        <td>{{ cambio.fecha }}</td>
+        <td>{{ cambio.valor }}</td>
+        <td>
+            <a href="{% url 'editar_tipocambio' cambio.pk %}">✏️ Editar</a> |
+            <a href="{% url 'eliminar_tipocambio' cambio.pk %}">🗑️ Eliminar</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="4">No hay registros de tipo de cambio.</td></tr>
+    {% endfor %}
+</table>

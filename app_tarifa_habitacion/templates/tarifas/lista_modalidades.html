@@ -1,0 +1,19 @@
+<h1>Lista de Modalidades</h1>
+<a href="{% url 'crear_modalidad' %}">➕ Nueva Modalidad</a>
+<table border="1">
+    <tr>
+        <th>Nombre</th>
+        <th>Acciones</th>
+    </tr>
+    {% for modalidad in modalidades %}
+    <tr>
+        <td>{{ modalidad.nombre }}</td>
+        <td>
+            <a href="{% url 'editar_modalidad' modalidad.pk %}">✏️ Editar</a> |
+            <a href="{% url 'eliminar_modalidad' modalidad.pk %}">🗑️ Eliminar</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="2">No hay modalidades registradas.</td></tr>
+    {% endfor %}
+</table>

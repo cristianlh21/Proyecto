@@ -1,0 +1,19 @@
+<h1>Lista de Canales de Venta</h1>
+<a href="{% url 'crear_canal' %}">➕ Nuevo Canal</a>
+<table border="1">
+    <tr>
+        <th>Nombre</th>
+        <th>Acciones</th>
+    </tr>
+    {% for canal in canales %}
+    <tr>
+        <td>{{ canal.nombre }}</td>
+        <td>
+            <a href="{% url 'editar_canal' canal.pk %}">✏️ Editar</a> |
+            <a href="{% url 'eliminar_canal' canal.pk %}">🗑️ Eliminar</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="2">No hay canales registrados.</td></tr>
+    {% endfor %}
+</table>

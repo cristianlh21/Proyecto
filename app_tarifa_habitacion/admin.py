@@ -21,6 +21,6 @@ class ModalidadTarifaAdmin(admin.ModelAdmin):
 
 @admin.register(Tarifa)
 class TarifaAdmin(admin.ModelAdmin):
-    list_display = ('tipo', 'canal_venta', 'modalidad', 'monto', 'moneda', 'temporada')
-    list_filter = ('tipo', 'canal_venta', 'modalidad', 'moneda', 'temporada')
-    search_fields = ('tipo__nombre', 'canal_venta__nombre', 'modalidad__nombre')
+    list_display = ('tipo_habitacion', 'canal_venta', 'modalidad', 'monto', 'moneda')
+    list_filter = ('tipo_habitacion', 'canal_venta', 'modalidad', 'moneda')
+    search_fields = ('tipo_habitacion__nombre', 'canal_venta__nombre', 'modalidad__nombre')
