@@ -20,3 +20,6 @@ media/
 
 # Otros
 .DS_Store
+
+# vite
+node_modules/

@@ -1,4 +1,7 @@
 <!-- templates/habitaciones/lista_habitaciones.html -->
+{% extends "base.html" %}
+
+{% block content %}
 <h1>Listado de Habitaciones</h1>
 
 <form method="get">
@@ -38,3 +41,4 @@
     <tr><td colspan="5">No hay habitaciones disponibles</td></tr>
     {% endfor %}
 </table>
+{% endblock %}
