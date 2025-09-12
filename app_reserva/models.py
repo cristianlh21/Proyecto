@@ -3,19 +3,6 @@ from decimal import Decimal
 from app_habitacion.models import Habitacion
 from app_tarifa_habitacion.models import Tarifa, Moneda
 
-class TipoCambio(models.Model):
-    fecha = models.DateField()
-    moneda = models.ForeignKey(Moneda, on_delete=models.CASCADE)
-    valor = models.DecimalField(max_digits=12, decimal_places=2)  # valor de 1 unidad de moneda en ARS
-
-    class Meta:
-        unique_together = ('fecha', 'moneda')  # evita duplicados para la misma fecha y moneda
-
-    def __str__(self):
-        return f"{self.moneda.nombre} - {self.fecha} : {self.valor} ARS"
-
-
-
 
 class Reserva(models.Model):
     fecha_ingreso = models.DateField()
