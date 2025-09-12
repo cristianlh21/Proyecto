@@ -1,61 +1,44 @@
 from django.db import models
+from app_huesped.models import Huesped
+from app_habitacion.models import Habitacion
+from app_tarifa_habitacion.models import Tarifa, Moneda
+
+ESTADOS_RESERVA = [
+    ("PENDIENTE", "Pendiente"),
+    ("CHECKIN", "Check-in"),
+    ("CHECKOUT", "Check-out"),
+    ("CANCELADA", "Cancelada"),
+]
 
 class Reserva(models.Model):
+    huesped_reservante = models.ForeignKey(
+        Huesped, on_delete=models.PROTECT, related_name="reservas_realizadas",
+        blank=True, null=True
+    )
     fecha_ingreso = models.DateField()
     fecha_salida = models.DateField()
-    
-    ESTADO_CHOICES = [
-        ('pendiente', 'Pendiente'),
-        ('checkin', 'Check-in'),
-        ('checkout', 'Check-out'),
-        ('cancelada', 'Cancelada'),
-    ]
-    estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='pendiente')
-    
-    monto_total = models.DecimalField(max_digits=10, decimal_places=2)
-    reservante = models.ForeignKey('app_huesped.Huesped', on_delete=models.PROTECT, related_name='reservas')
-
-    def actualizar_monto_total(self):
-        total = sum(hr.monto_ars for hr in self.habitaciones_reservadas.all() if hr.monto_ars)
-        self.monto_total = total
-        self.save()
-        
-    def __str__(self):
-        return f"Reserva {self.id} - {self.reservante}"
-
-
-class HabitacionReserva(models.Model):
-    reserva = models.ForeignKey('app_reserva.Reserva', on_delete=models.CASCADE, related_name='habitaciones_reservadas')
-    habitacion = models.ForeignKey('app_habitacion.Habitacion', on_delete=models.PROTECT)
-    tarifa = models.ForeignKey('app_tarifa_habitacion.Tarifa', on_delete=models.PROTECT)
-    moneda_original = models.ForeignKey('app_tarifa_habitacion.Moneda', on_delete=models.PROTECT)
-    monto_ars = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    
-    def save(self, *args, **kwargs):
-        # Traer datos de la tarifa
-        if self.tarifa:
-            self.moneda_original = self.tarifa.moneda
-            monto_original = self.tarifa.monto
-
-            # Si no es ARS, buscar tipo de cambio
-            if self.moneda_original.nombre != "ARS":
-                from app_tarifa_habitacion.models import TipoCambio
-                tipo_cambio = TipoCambio.objects.filter(
-                    moneda=self.moneda_original
-                ).order_by('-fecha').first()
-                if tipo_cambio:
-                    self.monto_ars = monto_original * tipo_cambio.valor
-            else:
-                self.monto_ars = monto_original
-
-        super().save(*args, **kwargs)
-        self.reserva.actualizar_monto_total()
-    def __str__(self):
-        return f"Habitación {self.habitacion} en Reserva {self.reserva}"
-    
-class HuespedHabitacionReserva(models.Model):
-    habitacion_reserva = models.ForeignKey('app_reserva.HabitacionReserva', on_delete=models.CASCADE, related_name='huespedes')
-    huesped = models.ForeignKey('app_huesped.Huesped', on_delete=models.PROTECT)
+    estado = models.CharField(max_length=20, choices=ESTADOS_RESERVA, default="PENDIENTE")
+    monto_total = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
 
     def __str__(self):
-        return f"Huesped {self.huesped} en Habitación {self.habitacion_reserva}"
+        return f"Reserva #{self.pk} - {self.huesped_reservante} ({self.estado})"
+    
+class ReservaHabitacion(models.Model):
+    reserva = models.ForeignKey(Reserva, on_delete=models.CASCADE, related_name="habitaciones")
+    habitacion = models.ForeignKey(Habitacion, on_delete=models.PROTECT)
+    tarifa = models.ForeignKey(Tarifa, on_delete=models.PROTECT)
+    moneda_original = models.ForeignKey(Moneda, on_delete=models.PROTECT)
+    monto_ars = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
+
+    def __str__(self):
+        return f"Reserva #{self.reserva.pk} - Habitación {self.habitacion.numero}"
+
+class HuespedReservaHabitacion(models.Model):
+    reserva_habitacion = models.ForeignKey(
+        ReservaHabitacion, on_delete=models.CASCADE, related_name="huespedes"
+    )
+    huesped = models.ForeignKey(Huesped, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return f"{self.huesped} - Habitación {self.reserva_habitacion.habitacion.numero}"
+

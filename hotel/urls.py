@@ -23,5 +23,5 @@ urlpatterns = [
     path('', include('app_habitacion.urls')),
     path('tarifas/', include('app_tarifa_habitacion.urls')),
     path('huespedes/', include('app_huesped.urls')),
-
+    path('reservas/', include('app_reserva.urls')),
 ]

@@ -1,31 +1,23 @@
 from django.contrib import admin
-from .models import Reserva, HabitacionReserva, HuespedHabitacionReserva
+from .models import Reserva, ReservaHabitacion, HuespedReservaHabitacion
+
+# Register your models here.
+
 
 
 
 class HabitacionReservaInline(admin.TabularInline):
-    model = HabitacionReserva
+    model = ReservaHabitacion
     extra = 1
     readonly_fields = ("moneda_original", "monto_ars")
 
 
 @admin.register(Reserva)
 class ReservaAdmin(admin.ModelAdmin):
-    list_display = ("id", "reservante", "fecha_ingreso", "fecha_salida", "estado", "monto_total")
-    list_filter = ("estado", "fecha_ingreso", "fecha_salida")
-    search_fields = ("reservante__apellido", "reservante__nombre", "reservante__documento")
-    readonly_fields = ("monto_total",)
-    inlines = [HabitacionReservaInline]
+    list_display = ("id","fecha_ingreso", "fecha_salida", "estado", "monto_total")
 
 
-class HuespedHabitacionReservaInline(admin.TabularInline):
-    model = HuespedHabitacionReserva
-    extra = 1
 
-
-@admin.register(HabitacionReserva)
+@admin.register(ReservaHabitacion)
 class HabitacionReservaAdmin(admin.ModelAdmin):
     list_display = ("reserva", "habitacion", "tarifa", "moneda_original", "monto_ars")
-    readonly_fields = ("moneda_original", "monto_ars")
-    list_filter = ("habitacion", "tarifa__moneda")
-    inlines = [HuespedHabitacionReservaInline]
