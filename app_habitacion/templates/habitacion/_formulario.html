@@ -28,7 +28,7 @@
                             <span class="helper-text text-end">{{ form.numero.errors|striptags }}</span>
                         {% endif %}
                     </label>
-                    <input type="text" placeholder="101" class="input" id="numero" value="{{ form.numero.value|default_if_none:'' }}" />
+                    <input type="text" placeholder="101" class="input" id="numero" name="numero" value="{{ form.numero.value|default_if_none:'' }}" />
                     <span class="helper-text text-end">Por favor ingrese el número de habitación</span>
                 </div>
 
@@ -47,7 +47,7 @@
                 <div class="w-48" data-input-number>
                     <label class="label-text" for="piso">Piso(Obligatorio)</label>
                     <div class="input">
-                      <input type="text" name="piso" id="piso" value="{{ form.piso.value|default_if_none:'' }}" aria-label="Label input number" data-input-number-input />
+                      <input type="text" name="piso" id="piso" value="{{ form.piso.value|default_if_none:1 }}" aria-label="Label input number" data-input-number-input />
                       <span class="my-auto flex gap-3">
                         <button type="button" class="btn btn-primary btn-soft size-5.5 min-h-0 rounded-sm p-0" aria-label="Decrement button" data-input-number-decrement >
                           <span class="icon-[tabler--minus] size-3.5 shrink-0"></span>
