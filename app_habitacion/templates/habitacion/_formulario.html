@@ -1,0 +1,96 @@
+<div id="form-container">
+    <div class="p-8">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="mb-4 p-4 text-white rounded {% if message.tags == 'success' %}bg-green-500{% elif message.tags == 'error' %}bg-red-500{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+
+        <div class="p-6 rounded-lg shadow-md">
+            {% if es_edicion %}
+                <h2 class="text-2xl font-bold mb-4">Editar Habitación</h2>
+            {% else %}
+                <h2 class="text-2xl font-bold mb-4">Crear Nueva Habitación</h2>
+            {% endif %}
+
+            <form method="post" class="flex flex-col gap-4"
+                hx-post="{% if es_edicion %}{% url 'editar_habitacion' habitacion.id %}{% else %}{% url 'crear_habitacion' %}{% endif %}"
+                hx-target="#form-container"
+                hx-swap="innerHTML">
+                {% csrf_token %}
+                
+                <div class="w-96">
+                    <label class="label-text" for="numero">Número de habitación(Obligatorio)
+                        {% if form.numero.errors %}
+                            <span class="helper-text text-end">{{ form.numero.errors|striptags }}</span>
+                        {% endif %}
+                    </label>
+                    <input type="text" placeholder="101" class="input" id="numero" value="{{ form.numero.value|default_if_none:'' }}" />
+                    <span class="helper-text text-end">Por favor ingrese el número de habitación</span>
+                </div>
+
+                <div class="w-96">
+                    <label class="label-text" for="tipo_habitacion">Tipo de Habitación(Obligatorio)</label>
+                    <select class="select" 
+                    name="tipo_habitacion"
+                    id="tipo_habitacion">
+                      {% for value, label in form.tipo_habitacion.field.choices %}
+                            <option value="{{ value }}"{% if form.tipo_habitacion.value|stringformat:"s" == value|stringformat:"s" %} selected{% endif %}>{{ label }}</option>
+                      {% endfor %}
+                    </select>
+                    <span class="helper-text text-end">Por favor seleccione el tipo de habitación</span>
+                </div>
+
+                <div class="w-48" data-input-number>
+                    <label class="label-text" for="piso">Piso(Obligatorio)</label>
+                    <div class="input">
+                      <input type="text" name="piso" id="piso" value="{{ form.piso.value|default_if_none:'' }}" aria-label="Label input number" data-input-number-input />
+                      <span class="my-auto flex gap-3">
+                        <button type="button" class="btn btn-primary btn-soft size-5.5 min-h-0 rounded-sm p-0" aria-label="Decrement button" data-input-number-decrement >
+                          <span class="icon-[tabler--minus] size-3.5 shrink-0"></span>
+                        </button>
+                        <button type="button" class="btn btn-primary btn-soft size-5.5 min-h-0 rounded-sm p-0" aria-label="Increment button" data-input-number-increment >
+                          <span class="icon-[tabler--plus] size-3.5 shrink-0"></span>
+                        </button>
+                      </span>
+                    </div>
+                    <span class="helper-text text-end">Por favor ingrese el N° de piso</span>
+                    {% if form.piso.errors %}
+                        <p class="mt-1 text-sm text-red-600">{{ form.piso.errors|striptags }}</p>
+                    {% endif %}
+                </div>
+                
+                <div class="w-96">
+                    <label class="label-text" for="estado">Estado de la habitación(Obligatorio)</label>
+                    <select class="select" 
+                    name="estado"
+                    id="estado">
+                      {% for value, label in form.estado.field.choices %}
+                            <option value="{{ value }}"{% if form.estado.value|stringformat:"s" == value|stringformat:"s" %} selected{% endif %}>{{ label }}</option>
+                      {% endfor %}
+                    </select>
+                    <span class="helper-text text-end">Por favor seleccione el estado de la habitación</span>
+                    {% if form.estado.errors %}
+                        <p class="mt-1 text-sm text-red-600">{{ form.estado.errors|striptags }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="mt-6 flex justify-between">
+                    <a href="{% url 'lista_habitaciones' %}" class="btn btn-secondary">
+                        Volver a la lista
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        {% if es_edicion %}
+                            Guardar Cambios
+                        {% else %}
+                            Guardar Habitación
+                        {% endif %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

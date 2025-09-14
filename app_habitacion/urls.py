@@ -9,6 +9,6 @@ urlpatterns = [
     path("tipos/", views.lista_tipo_habitacion, name="lista_tipo_habitacion"),
     path("tipos/<int:pk>/editar/", views.editar_tipo_habitacion, name="editar_tipo_habitacion"),
     path("tipos/<int:pk>/eliminar/", views.eliminar_tipo_habitacion, name="eliminar_tipo_habitacion"),
-    path("<int:habitacion_id>/editar/", views.editar_habitacion, name="editar_habitacion"),
-    path("<int:habitacion_id>/eliminar/", views.eliminar_habitacion, name="eliminar_habitacion"),
+    path("editar/<int:habitacion_id>/", views.editar_habitacion, name="editar_habitacion"),
+    path("eliminar/<int:habitacion_id>/", views.eliminar_habitacion, name="eliminar_habitacion"),
 ]

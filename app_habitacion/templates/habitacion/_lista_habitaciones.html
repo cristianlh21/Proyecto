@@ -1,0 +1,47 @@
+<div id="lista-habitaciones">
+    <div class="flex justify-between items-center mb-4">
+      <h2>Lista de Habitaciones</h2>
+      <a href="{% url 'crear_habitacion' %}" 
+        hx-get="{% url 'crear_habitacion' %}"
+        hx-target="#main-content"
+        hx-swap="innerHTML"
+        hx-push-url="{% url 'crear_habitacion' %}"
+        class="link link-accent link-animated"> 
+        Crear una nueva habitación
+      </a>
+    </div>
+    <div class="w-full rounded-lg pb-2">
+      <div class="overflow-x-auto">
+        <table class="table">
+          <thead>
+          <tr class="border-0 bg-base-300/20 *:first:rounded-s-md *:last:rounded-e-md">
+            <th>NÚMERO</th>
+            <th>TIPO</th>
+            <th>PISO</th>
+            <th>ESTADO</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for habitacion in habitaciones %}
+                <tr>
+                  <td>{{ habitacion.numero }}</td>
+                  <td>{{ habitacion.tipo_habitacion.nombre }}</td>
+                  <td>{{ habitacion.piso }}</td>
+                  <td><span class="badge badge-soft badge-{{ habitacion.color }} text-xs">{{ habitacion.get_estado_display }}</span></td>
+                  <td>
+                    <a hx-get="{% url 'editar_habitacion' habitacion.id%}"
+                    hx-target="#main-content"
+                    hx-swap="innerHTML"
+                    hx-push-url="{% url 'editar_habitacion' habitacion_id=habitacion.id %}"
+                    class="btn btn-circle btn-text btn-sm" aria-label="Action button"><span class="icon-[tabler--pencil] size-5"></span></a>
+                    <button class="btn btn-circle btn-text btn-sm" aria-label="Action button"><span class="icon-[tabler--trash] size-5"></span></button>
+                    <button class="btn btn-circle btn-text btn-sm" aria-label="Action button"><span class="icon-[tabler--dots-vertical] size-5"></span></button>
+                  </td>
+                </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

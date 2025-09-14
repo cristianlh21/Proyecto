@@ -5,7 +5,7 @@ class TipoHabitacion(models.Model):
        ejemplo: Doble, Doble Matrimonial, Triple, etc.
     Args:
         nombre (str): nombre de la categoría de habitación.
-        capacidad (int): capacidad de húespedes de la habitación.
+        capacidad (int): capacidad de huéspedes de la habitación.
     """
     nombre = models.CharField(max_length=100)
     capacidad = models.PositiveSmallIntegerField()

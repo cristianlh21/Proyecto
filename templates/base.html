@@ -1,16 +1,44 @@
 {% load django_vite %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    
-    {% vite_asset 'static/js/main.js' %}
+    <title>Gestión Hotelera</title>
     {% vite_hmr_client %}
-    
+
+    {% vite_asset './static/js/main.js' %}
 </head>
-<body>
-    {% block content %}{% endblock %}
+<body class="flex min-h-screen">
+  <aside class="w-64 bg-gray-900 text-white min-h-screen p-4 flex flex-col">
+    <div class="mb-6">
+        <h1 class="text-2xl font-bold">HotelManager</h1>
+    </div>
+    <nav>
+        <ul>
+            <li class="mb-2">
+                <a href="{% url 'lista_habitaciones' %}"
+                   class="block p-2 rounded hover:bg-gray-700"
+                   hx-get="{% url 'lista_habitaciones' %}"
+                   hx-target="#main-content"
+                   hx-push-url="true">
+                   Habitaciones
+                </a>
+            </li>
+            <li class="mb-2">
+                <a href="/huespedes/"
+                   class="block p-2 rounded hover:bg-gray-700"
+                   hx-get="{% url 'lista_huespedes' %}"
+                   hx-target="#main-content"
+                   hx-push-url="true">
+                   Huéspedes
+                </a>
+            </li>
+        </ul>
+    </nav>
+</aside>
+
+<main id="main-content" class="flex-grow p-8">
+  {% block content %}{% endblock %}
+</main>
 </body>
 </html>

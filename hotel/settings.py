@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     
     #libs
     'django_vite',
-    
     #apps
     'app_habitacion',
     'app_tarifa_habitacion',

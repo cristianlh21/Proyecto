@@ -9,4 +9,4 @@ class TipoHabitacionForm(forms.ModelForm):
 class HabitacionForm(forms.ModelForm):
     class Meta:
         model = Habitacion
-        fields = ["numero", "tipo_habitacion", "piso", "estado"]
+        fields = '__all__'
